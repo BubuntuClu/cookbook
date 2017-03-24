@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'User sign in', %q{
   In order to be able to work with recipe
@@ -6,25 +6,39 @@ feature 'User sign in', %q{
   I want to be able to sign in
 } do
 
-  scenario 'Registered user tryes to sign in' do
-    user = User.create!(email: 'test@test.test', password: 'password')
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+  given(:user) { create(:user) }
+
+  scenario 'Registered user try to sign in' do
+    sign_in(user)
 
     expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path
   end
 
-  scenario 'Not-registered user tryes to sign in' do
+  scenario 'Non-registered user try to sign in' do
     visit new_user_session_path
-    fill_in 'Email', with: 'tt@tt.t'
-    fill_in 'Password', with: 'adfgsdfa'
+    fill_in 'Email', with: 'invalid@test.com'
+    fill_in 'Password', with: '123456'
     click_on 'Log in'
 
     expect(page).to have_content 'Invalid Email or password.'
     expect(current_path).to eq new_user_session_path
+  end
+
+  scenario 'Authenticated user try to sign out' do
+    sign_in(user)
+    click_on 'Sign out'
+    expect(page).to have_content 'Signed out successfully.'
+  end
+
+  scenario 'User try to sign up' do
+    visit new_user_session_path
+    click_on 'Sign up'
+    fill_in 'Email', with: 'test@test.com'
+    fill_in 'Password', with: '123456'
+    fill_in 'Password confirmation', with: '123456'
+    click_on 'Sign up'
+    expect(page).to have_content 'Welcome! You have signed up successfully.'
   end
 
 end
