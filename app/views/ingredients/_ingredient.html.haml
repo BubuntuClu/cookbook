@@ -1,0 +1,6 @@
+.ingredient{ id: "ingredient_#{ingr.id}" }
+  .name
+    %p= ingr.name
+  .measure
+    %p= ingr.measure
+  %img.js__delete_ingredient{ del_id: "#{ingr.id}", alt: '', src: image_url('delete.svg'), data: { title: 'Удалить' } }
