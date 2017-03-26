@@ -3,4 +3,7 @@
     - if can?(:create, Recipe)
       =link_to 'Создать рецепт', new_recipe_path
   .span8
-    = render @recipes
+    #recipes
+      %h1 Рецепты
+      = render @recipes
+= will_paginate @recipes
