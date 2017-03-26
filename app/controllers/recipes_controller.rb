@@ -6,7 +6,8 @@ class RecipesController < ApplicationController
   # authorize_resource
 
   def index
-    respond_with (@recipes = Recipe.all)
+    # respond_with (@recipes = Recipe.all.page(params[:page]))
+    @recipes = Recipe.paginate(page: params[:page], per_page: 20)
   end
 
   def show

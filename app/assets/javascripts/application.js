@@ -18,3 +18,4 @@
 //= require cocoon
 //= require jquery.remotipart
 //= require ingredient
+//= require jquery.infinitescroll
