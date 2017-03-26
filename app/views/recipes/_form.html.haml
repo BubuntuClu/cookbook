@@ -1,0 +1,31 @@
+.recipe
+  = form_for recipe, html: { miltipart: true } do |f|
+    .recipe_title
+      %p.error_msg
+        = recipe.errors.messages.dig(:title, 0)
+
+      = f.label :title
+      = f.text_field :title
+
+    .preview_image
+      Превью блюда
+      %input{ type: 'file', id: 'file', name: '[preview_image]' }
+
+
+    .recipe_ingredients
+      - unless recipe.new_record?
+        - recipe.ingredients.each do |ingredient|
+          = render 'ingredients/ingredient', ingr: ingredient
+          
+      = f.simple_fields_for :ingredients, recipe.ingredients.build do |ingredient|
+        = render 'ingredient_fields', f: ingredient
+        .links
+          = link_to_add_association 'Добавить ингридиент', f, :ingredients      
+      
+    .recipe_description
+      %p.error_msg
+        = recipe.errors.messages.dig(:title, 0)
+      = f.label :description
+      = f.text_area :description
+      %br
+      = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }"

@@ -1,0 +1,19 @@
+.h2#title_recipe
+  = @recipe.title
+    
+%p Превьюшка рецепта
+%br
+
+.ingredients
+- @recipe.ingredients.each do |ingredient|
+  = ingredient.name
+  = ingredient.measure
+  %br
+
+.recipe_description
+  = @recipe.description
+
+- if can?(:edit, @recipe)
+  = link_to 'Редактировать', edit_recipe_path(@recipe)
+- if can?(:delete, @recipe)
+  = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 

@@ -2,5 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "recipes#index"
 
-  resources :recipes
+  resources :recipes do
+    resources :ingredients, only: [:destroy]
+  end
 end

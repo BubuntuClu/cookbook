@@ -1,0 +1,6 @@
+.row
+  .span4
+    - if can?(:create, Recipe)
+      =link_to 'Создать рецепт', new_recipe_path
+  .span8
+    = render @recipes
