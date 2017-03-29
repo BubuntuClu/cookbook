@@ -1,4 +1,6 @@
 class Recipe < ApplicationRecord
+  include Bootsy::Container
+
   has_many :ingredients, dependent: :destroy
   has_many :attachments, dependent: :destroy
   belongs_to :user
