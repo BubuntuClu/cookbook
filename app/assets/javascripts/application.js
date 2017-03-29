@@ -19,3 +19,4 @@
 //= require jquery.remotipart
 //= require ingredient
 //= require jquery.infinitescroll
+//= require bootsy

@@ -26,6 +26,6 @@
       %p.error_msg
         = recipe.errors.messages.dig(:title, 0)
       = f.label :description
-      = f.text_area :description
+      = f.bootsy_area :description, class: 'wide', editor_options: { link: false, color: false, disabled: true }
       %br
       = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }"
