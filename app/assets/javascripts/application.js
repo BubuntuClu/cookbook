@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
+//= require cocoon
+//= require jquery.remotipart
+//= require ingredient
+//= require jquery.infinitescroll
+//= require bootsy

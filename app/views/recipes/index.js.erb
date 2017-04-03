@@ -1,0 +1,2 @@
+$("#recipes").append("<%= j render @recipes %>");
+$(".pagination").replaceWith("<%= j will_paginate(@recipes) %>");
