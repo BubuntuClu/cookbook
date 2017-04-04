@@ -28,9 +28,22 @@ class RecipesController < ApplicationController
     respond_with @recipe
   end
 
-  def send_on_moderation
+  def send_to_moderation
     recipe = Recipe.find(params[:recipe_id])
     recipe.update_attributes(status: :moderation)
+  end
+
+  def send_to_publish
+    recipe = Recipe.find(params[:recipe_id])
+    recipe.comments.destroy_all
+    recipe.update_attributes(status: :published)
+    redirect_to admin_index_path
+  end
+
+  def send_to_draft
+    recipe = Recipe.find(params[:recipe_id])
+    recipe.update_attributes(status: :draft)
+    redirect_to admin_index_path
   end
 
   private

@@ -1,3 +1,7 @@
 .recipe
   = link_to "#{recipe.title}", recipe_path(recipe.id)
   %p= recipe.description
+  %p 
+    Автор:
+    - user = User.find(recipe.user_id)
+    =link_to "#{user.email}", user_profile_path(user.id)

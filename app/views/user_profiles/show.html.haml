@@ -1,0 +1,7 @@
+#recipes
+  %h1 
+    Рецепты пользователя
+    = @user.email
+  = render @recipes
+= will_paginate @recipes
+

@@ -12,16 +12,27 @@
 
 .recipe_description
   = @recipe.description
+- if current_user
+  .links
+    - if current_user.author_of?(@recipe) && @recipe.is_draft?
+      = link_to 'Отправить на модерацию', recipe_send_to_moderation_path(@recipe), method: :post, remote: true
+      = link_to 'Редактировать', edit_recipe_path(@recipe)
+      = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
+      %br
+      .comments
+        - @recipe.comments.each do |comment|
+          %p= comment.body
+          %br
+    - if current_user.author_of?(@recipe) && @recipe.is_moderation?
+      %p На модерации
+    - if current_user.author_of?(@recipe) && @recipe.is_published?
+      %p Опубликован
 
-.links
-  - if current_user.author_of?(@recipe) && @recipe.is_draft?
-    = link_to 'Отправить на модерацию', recipe_send_on_moderation_path(@recipe), method: :post, remote: true
-    = link_to 'Редактировать', edit_recipe_path(@recipe)
-    = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
-
-  - if current_user.author_of?(@recipe) && @recipe.is_moderation?
-    %p На модерации
-  - if current_user.author_of?(@recipe) && @recipe.is_published?
-    %p Опубликован
-
-
+  - if current_user.admin && @recipe.is_moderation?
+    .admin_comments_panel
+      .new_comment
+        = form_for [@recipe, @recipe.comments.build], remote: true do |f|
+          = f.label :body
+          = f.text_area :body
+          = f.submit 'Вернуть рецепт на доработку'
+      = link_to 'Опубликовать рецепт', recipe_send_to_publish_path(@recipe), method: :post
