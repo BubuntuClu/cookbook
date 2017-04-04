@@ -3,6 +3,7 @@ class Recipe < ApplicationRecord
 
   has_many :ingredients, dependent: :destroy
   has_many :attachments, dependent: :destroy
+  has_many :comments, dependent: :destroy
   belongs_to :user
   
   validates :title, :description, presence: { message: 'не может быть пустым' }

@@ -1,0 +1,7 @@
+/ = render 'recipes/index', recipes: @recipes
+
+#recipes
+  %h1 Рецепты
+  = render @recipes
+= will_paginate @recipes
+

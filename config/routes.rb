@@ -6,8 +6,12 @@ Rails.application.routes.draw do
 
   resources :recipes do
     resources :ingredients, only: [:destroy]
-    post 'send_on_moderation', to: 'recipes#send_on_moderation'
+    post 'send_to_moderation', to: 'recipes#send_to_moderation'
+    get 'send_to_draft', to: 'recipes#send_to_draft'
+    post 'send_to_publish', to: 'recipes#send_to_publish'
+    resources :comments
   end
 
   resources :user_profiles
+  resources :admin
 end
