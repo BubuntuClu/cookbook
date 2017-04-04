@@ -13,7 +13,15 @@
 .recipe_description
   = @recipe.description
 
-- if can?(:edit, @recipe)
-  = link_to 'Редактировать', edit_recipe_path(@recipe)
-- if can?(:delete, @recipe)
-  = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
+.links
+  - if current_user.author_of?(@recipe) && @recipe.is_draft?
+    = link_to 'Отправить на модерацию', recipe_send_on_moderation_path(@recipe), method: :post, remote: true
+    = link_to 'Редактировать', edit_recipe_path(@recipe)
+    = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
+
+  - if current_user.author_of?(@recipe) && @recipe.is_moderation?
+    %p На модерации
+  - if current_user.author_of?(@recipe) && @recipe.is_published?
+    %p Опубликован
+
+

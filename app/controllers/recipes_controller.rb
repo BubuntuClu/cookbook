@@ -1,14 +1,7 @@
 class RecipesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:show]
   before_action :get_recipe, only: [:show, :edit, :update, :destroy]
   respond_to :html
-
-  # authorize_resource
-
-  def index
-    # respond_with (@recipes = Recipe.all.page(params[:page]))
-    @recipes = Recipe.paginate(page: params[:page], per_page: 20)
-  end
 
   def show
     respond_with @recipe
@@ -33,6 +26,11 @@ class RecipesController < ApplicationController
   def update
     @recipe.update(recipe_params)
     respond_with @recipe
+  end
+
+  def send_on_moderation
+    recipe = Recipe.find(params[:recipe_id])
+    recipe.update_attributes(status: :moderation)
   end
 
   private
