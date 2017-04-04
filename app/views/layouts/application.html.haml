@@ -27,13 +27,17 @@
           %ul.nav.navbar-nav
             - if user_signed_in? 
               %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+              %li= link_to 'Profile', user_profiles_path
             -else
               %li= link_to 'Sign in', new_user_session_path
 
     .container
+      = bootstrap_flash
       .row
-        .col-lg-9
-          = bootstrap_flash
+        .span4
+          - if can?(:create, Recipe)
+            =link_to 'Создать рецепт', new_recipe_path
+        .span8
           = yield
       %footer
         .container
