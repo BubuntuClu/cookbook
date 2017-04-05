@@ -10,7 +10,6 @@ feature 'Create recipe', %q{
   
   scenario 'Authenticated user creates recipe', js: true do
     sign_in(user)
-    visit recipes_path
     click_on 'Создать рецепт'
 
     fill_in 'Title', with: 'Test title'
@@ -41,7 +40,6 @@ feature 'Create recipe', %q{
 
   scenario 'Authenticated user creates invalid recipe' do
     sign_in(user)
-    visit recipes_path
     click_on 'Создать рецепт'
     fill_in 'Title', with: ''
     fill_in 'Description', with: ''
@@ -56,7 +54,6 @@ feature 'Create recipe', %q{
   end
 
   scenario 'Non-authenticated user try to creates recipe' do
-    visit recipes_path
     expect(page).to_not have_content 'Создать рецепт'
   end
 
