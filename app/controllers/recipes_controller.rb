@@ -17,7 +17,8 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    respond_with (@recipe.destroy) if can?(:destroy, @recipe)
+    @recipe.destroy if can?(:destroy, @recipe)
+    redirect_to user_profile_path(current_user)
   end
 
   def edit
