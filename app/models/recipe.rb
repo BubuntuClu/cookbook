@@ -13,16 +13,4 @@ class Recipe < ApplicationRecord
 
   scope :only_published, ->{ where(status: :published) }
   scope :only_moderation, ->{ where(status: :moderation) }
-
-  def is_draft?
-    draft?
-  end
-
-  def is_moderation?
-    moderation?
-  end
-
-  def is_published?
-    published?
-  end
 end

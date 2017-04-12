@@ -29,13 +29,13 @@ RSpec.describe RecipesController, type: :controller do
 
   describe 'POST#send_to_draft' do
     it 'change status to draft' do
-      post :send_to_draft, recipe_id: moderation_recipe.id
+      post :send_to_draft, recipe_id: moderation_recipe.id , comment: {body: 'test comment'}
       moderation_recipe.reload
       expect(moderation_recipe.status).to eq "draft"
     end
 
     it 'redirect to admin index' do
-      post :send_to_draft, recipe_id: moderation_recipe.id
+      post :send_to_draft, recipe_id: moderation_recipe.id, comment: {body: 'test comment'}
       expect(response).to redirect_to admin_index_path
     end
   end
