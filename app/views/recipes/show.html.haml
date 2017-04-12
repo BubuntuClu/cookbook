@@ -14,7 +14,7 @@
   = @recipe.description
 - if current_user
   .links
-    - if current_user.author_of?(@recipe) && @recipe.is_draft?
+    - if current_user.author_of?(@recipe) && @recipe.draft?
       = link_to 'Отправить на модерацию', recipe_send_to_moderation_path(@recipe), method: :post, remote: true
       = link_to 'Редактировать', edit_recipe_path(@recipe)
       = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
@@ -23,15 +23,15 @@
         - @recipe.comments.each do |comment|
           %p= comment.body
           %br
-    - if current_user.author_of?(@recipe) && @recipe.is_moderation?
+    - if current_user.author_of?(@recipe) && @recipe.moderation?
       %p На модерации
-    - if current_user.author_of?(@recipe) && @recipe.is_published?
+    - if current_user.author_of?(@recipe) && @recipe.published?
       %p Опубликован
 
-  - if current_user.admin && @recipe.is_moderation?
+  - if current_user.admin && @recipe.moderation?
     .admin_comments_panel
       .new_comment
-        = form_for [@recipe, @recipe.comments.build], remote: true do |f|
+        = form_for :comment, url: recipe_send_to_draft_path(@recipe), remote: true do |f|
           = f.label :body
           = f.text_area :body
           = f.submit 'Вернуть рецепт на доработку'

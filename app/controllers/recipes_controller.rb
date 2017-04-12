@@ -29,20 +29,16 @@ class RecipesController < ApplicationController
   end
 
   def send_to_moderation
-    recipe = Recipe.find(params[:recipe_id])
-    recipe.update_attributes(status: :moderation)
+    StateController.change_status(params[:recipe_id],params[:action])
   end
 
   def send_to_publish
-    recipe = Recipe.find(params[:recipe_id])
-    recipe.comments.destroy_all
-    recipe.update_attributes(status: :published)
+    StateController.change_status(params[:recipe_id],params[:action])
     redirect_to admin_index_path
   end
 
   def send_to_draft
-    recipe = Recipe.find(params[:recipe_id])
-    recipe.update_attributes(status: :draft)
+    StateController.change_status(params[:recipe_id], params[:action], comment_params)
     redirect_to admin_index_path
   end
 
@@ -54,6 +50,10 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
+  end
+
+  def comment_params
+    params.require(:comment).permit(:body)
   end
 
 end
