@@ -63,5 +63,4 @@ class RecipesController < ApplicationController
   def build_comment
     @comment = @recipe.comments.build
   end
-
 end

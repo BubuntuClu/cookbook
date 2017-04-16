@@ -38,11 +38,7 @@
       = link_to 'Опубликовать рецепт', recipe_send_to_publish_path(@recipe), method: :post
 
 - if @recipe.published?
-  Комментарии пользователей
-  %br
-  .user_comments
-    - @recipe.comments.only_user.each do |comment|
-      = render 'comments/comment', comment: comment
+  =render 'votes/vote', obj: @recipe
   - if current_user
     .user_comments_panel
       .comment_errors
@@ -51,3 +47,9 @@
           = f.label :body
           = f.text_area :body
           = f.submit 'Оставить комментарий'
+  Комментарии пользователей
+  %br
+  .user_comments
+    - @recipe.comments.only_user.each do |comment|
+      = render 'comments/comment', comment: comment
+
