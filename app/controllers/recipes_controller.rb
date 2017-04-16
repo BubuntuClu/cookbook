@@ -1,6 +1,8 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :get_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :send_to_moderation, :send_to_publish, :send_to_draft]
+  before_action :build_comment, only: :show
+
   respond_to :html
 
   def show
@@ -30,23 +32,24 @@ class RecipesController < ApplicationController
   end
 
   def send_to_moderation
-    StateController.change_status(params[:recipe_id],params[:action])
+    @recipe.set_to_moderation
   end
 
   def send_to_publish
-    StateController.change_status(params[:recipe_id],params[:action])
+    @recipe.set_to_publish
     redirect_to admin_index_path
   end
 
   def send_to_draft
-    StateController.change_status(params[:recipe_id], params[:action], comment_params)
+    @recipe.set_to_draft(comment_params)
     redirect_to admin_index_path
   end
 
   private
 
-  def get_recipe
-    @recipe = Recipe.find(params[:id])
+  def find_recipe
+    @recipe = Recipe.find(params[:id]) if params[:id]
+    @recipe = Recipe.find(params[:recipe_id]) if params[:recipe_id]
   end
 
   def recipe_params
@@ -55,6 +58,10 @@ class RecipesController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def build_comment
+    @comment = @recipe.comments.build
   end
 
 end

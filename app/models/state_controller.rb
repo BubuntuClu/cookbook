@@ -10,13 +10,13 @@ class StateController
       end
 
       if action == 'send_to_publish'
-        recipe.comments.destroy_all
+        recipe.comments.where(by_admin: true).destroy_all
         recipe.update_attributes(status: :published) 
         return 
       end
 
       if action == 'send_to_draft'
-        recipe.comments.create(body: comment[:body])
+        recipe.comments.create(body: comment[:body], by_admin: true)
         recipe.update_attributes(status: :draft) 
         return
       end

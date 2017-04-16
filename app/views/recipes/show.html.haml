@@ -19,8 +19,8 @@
       = link_to 'Редактировать', edit_recipe_path(@recipe)
       = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
       %br
-      .comments
-        - @recipe.comments.each do |comment|
+      .admin_comments
+        - @recipe.comments.only_admin.each do |comment|
           %p= comment.body
           %br
     - if current_user.author_of?(@recipe) && @recipe.moderation?
@@ -36,3 +36,18 @@
           = f.text_area :body
           = f.submit 'Вернуть рецепт на доработку'
       = link_to 'Опубликовать рецепт', recipe_send_to_publish_path(@recipe), method: :post
+
+- if @recipe.published?
+  Комментарии пользователей
+  %br
+  .user_comments
+    - @recipe.comments.only_user.each do |comment|
+      = render 'comments/comment', comment: comment
+  - if current_user
+    .user_comments_panel
+      .comment_errors
+      .new_comment
+        = form_for [@recipe, @comment], remote: true do |f|
+          = f.label :body
+          = f.text_area :body
+          = f.submit 'Оставить комментарий'
