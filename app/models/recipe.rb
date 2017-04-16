@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
   include Bootsy::Container
+  include Votable
 
   has_many :ingredients, dependent: :destroy
   has_many :attachments, dependent: :destroy

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404102337) do
+ActiveRecord::Schema.define(version: 20170416091748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20170404102337) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "status",      default: 0
+    t.integer  "rating",      default: 0
     t.index ["title"], name: "index_recipes_on_title", using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
   end
@@ -83,8 +84,18 @@ ActiveRecord::Schema.define(version: 20170404102337) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.boolean  "admin",                  default: false
+    t.integer  "rating",                 default: 0
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "votable_id"
+    t.string  "votable_type"
+    t.integer "user_id"
+    t.integer "value"
+    t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
+    t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type", using: :btree
   end
 
 end
