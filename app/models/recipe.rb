@@ -21,12 +21,12 @@ class Recipe < ApplicationRecord
     self.update_attributes(status: :draft) 
   end
 
-  def set_to_publish
+  def set_to_publish(*args)
     self.comments.where(by_admin: true).destroy_all
     self.update_attributes(status: :published) 
   end
 
-  def set_to_moderation
+  def set_to_moderation(*args)
     self.update_attributes(status: :moderation) 
   end
 end

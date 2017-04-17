@@ -8,6 +8,6 @@ class Comment < ApplicationRecord
   scope :only_user, ->{ where(by_admin: false) }
 
   def author_name
-    User.find(self.user_id).email
+    self.user.email
   end
 end

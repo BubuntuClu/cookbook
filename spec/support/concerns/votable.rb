@@ -26,11 +26,11 @@ shared_examples_for "votable" do
       expect(subject.user.rating).to eq(0)
     end
 
-    it "voted_for" do
-      val = subject.voted_for(user)
-      expect(val).to eq(0)
+    it "voted_for_by?" do
+      val = subject.voted_for_by?(user)
+      expect(val).to be false
       do_vote("down")
-      val = subject.voted_for(user)
+      val = subject.voted_for_by?(user)
       expect(subject.rating).to eq(-1)
       expect(subject.user.rating).to eq(-0.5)
     end
@@ -41,7 +41,7 @@ shared_examples_for "votable" do
     end
 
     def do_vote(vote)
-      subject.send("vote_#{vote}", user, { votable_id: subject.id, votable_type: "subject", value: vote })
+      subject.send("vote", user, { votable_id: subject.id, votable_type: "subject", value: vote })
     end
   end
 end

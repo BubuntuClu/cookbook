@@ -6,8 +6,7 @@
     = recipe.rating
   %p 
     Автор:
-    - user = User.find(recipe.user_id)
-    - if user == current_user
-      =link_to "#{user.email}", user_profiles_path
+    - if recipe.user == current_user
+      =link_to "#{recipe.user.email}", user_profiles_path
     -else
-      =link_to "#{user.email}", user_profile_path(user.id)
+      =link_to "#{recipe.user.email}", user_profile_path(recipe.user.id)
