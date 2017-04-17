@@ -10,9 +10,9 @@ Rails.application.routes.draw do
 
   resources :recipes, concerns: [:votable] do
     resources :ingredients, only: [:destroy]
-    post 'send_to_moderation', to: 'recipes#send_to_moderation'
-    post 'send_to_draft', to: 'recipes#send_to_draft'
-    post 'send_to_publish', to: 'recipes#send_to_publish'
+    post 'moderation', to: 'recipes#state_handler'
+    post 'draft', to: 'recipes#state_handler'
+    post 'publish', to: 'recipes#state_handler'
     resources :comments
   end
 

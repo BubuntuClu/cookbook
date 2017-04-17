@@ -1,12 +1,12 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :send_to_moderation, :send_to_publish, :send_to_draft]
+  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :state_handler]
   before_action :build_comment, only: :show
 
   respond_to :html
 
   def show
-    respond_with @recipe
+    respond_with(@comments = @recipe.comments.only_user.includes(:user))
   end
 
   def new
@@ -31,18 +31,9 @@ class RecipesController < ApplicationController
     respond_with @recipe
   end
 
-  def send_to_moderation
-    @recipe.set_to_moderation
-  end
-
-  def send_to_publish
-    @recipe.set_to_publish
-    redirect_to admin_index_path
-  end
-
-  def send_to_draft
-    @recipe.set_to_draft(comment_params)
-    redirect_to admin_index_path
+  def state_handler
+    @recipe.send("set_to_#{params[:state]}", params[:comment] ||= nil)
+    redirect_to admin_index_path unless params[:state] == 'moderation'
   end
 
   private
@@ -54,10 +45,6 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
-  end
-
-  def comment_params
-    params.require(:comment).permit(:body)
   end
 
   def build_comment

@@ -5,18 +5,10 @@ module Votable
     has_many :votes, as: :votable
   end
 
-  def vote_up(current_user, vote_params)
+  def vote(current_user, vote_params)
     ActiveRecord::Base.transaction do
-      @vote = self.votes.create!(vote_params.merge(user_id: current_user.id, value: 1))
-      self.update!(rating: sum )
-      self.user.update!(rating: user_rating_sum )
-    end
-    @vote
-  end
-
-  def vote_down(current_user, vote_params)
-    ActiveRecord::Base.transaction do
-      @vote = self.votes.create!(vote_params.merge(user_id: current_user.id, value: -1))
+      value = (vote_params[:value] == 'up') ? 1 : -1
+      @vote = self.votes.create!({user_id: current_user.id, value: value})
       self.update!(rating: sum )
       self.user.update!(rating: user_rating_sum )
     end
@@ -37,8 +29,8 @@ module Votable
     get_vote_for_obj_by_user(user).user_id == user.id
   end
 
-  def voted_for(user)
-    self.votes.where(user_id: user.id).take&.value || 0
+  def voted_for_by?(user)
+    !!self.votes.where(user_id: user.id).take&.value
   end
 
   private 

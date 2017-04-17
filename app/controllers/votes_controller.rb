@@ -4,7 +4,7 @@ class VotesController < ApplicationController
 
   def create
     if !current_user.author_of?(@obj)
-      vote = @obj.send("vote_#{vote_params[:value]}", current_user, vote_params)
+      vote = @obj.send("vote", current_user, vote_params)
       if vote.persisted?
         render json: { id: "#{@obj.class.name.underscore}_#{@obj.id}", rating: @obj.rating, action: "vote" }
       else
