@@ -15,7 +15,8 @@
 - if current_user
   .links
     - if current_user.author_of?(@recipe) && @recipe.draft?
-      = link_to 'Отправить на модерацию', recipe_moderation_path(@recipe, state: :moderation), method: :post, remote: true
+      - if can?(:set_to_moderation, @recipe)
+        = link_to 'Отправить на модерацию', recipe_moderation_path(@recipe, state: :moderation), method: :post, remote: true
       = link_to 'Редактировать', edit_recipe_path(@recipe)
       = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
       %br
@@ -28,14 +29,15 @@
     - if current_user.author_of?(@recipe) && @recipe.published?
       %p Опубликован
 
-  - if current_user.admin && @recipe.moderation?
+  - if can?(:set_to_draft, @recipe) && @recipe.moderation?
     .admin_comments_panel
       .new_comment
         = form_for :comment, url: recipe_draft_path(@recipe, state: :draft), remote: true do |f|
           = f.label :body
           = f.text_area :body
           = f.submit 'Вернуть рецепт на доработку'
-      = link_to 'Опубликовать рецепт', recipe_publish_path(@recipe, state: :publish), method: :post
+  - if can?(:set_to_publish, @recipe)
+    = link_to 'Опубликовать рецепт', recipe_publish_path(@recipe, state: :publish), method: :post
 
 - if @recipe.published?
   =render 'votes/vote', obj: @recipe
