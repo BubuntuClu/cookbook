@@ -1,7 +1,9 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :state_handler]
+  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :set_state]
   before_action :build_comment, only: :show
+
+  authorize_resource
 
   respond_to :html
 
@@ -31,8 +33,10 @@ class RecipesController < ApplicationController
     respond_with @recipe
   end
 
-  def state_handler
-    @recipe.send("set_to_#{params[:state]}", params[:comment] ||= nil)
+  def set_state
+    if can?("set_to_#{params[:state]}".to_sym, @recipe)
+      @recipe.send("set_to_#{params[:state]}", params[:comment])
+    end
     redirect_to admin_index_path unless params[:state] == 'moderation'
   end
 
