@@ -26,15 +26,23 @@ RSpec.describe Ability, type: :model do
     let(:moderation_recipe) { create(:moderation_recipe, user: user) }
 
     describe 'simple user' do
+      let(:user) { create(:user) }
+      let(:draft_recipe) { create(:draft_recipe, user: user) }
+      let(:moderation_recipe) { create(:moderation_recipe, user: user) }
+
       it { should be_able_to :set_to_moderation, draft_recipe, user: user }
       it { should_not be_able_to :set_to_publish, moderation_recipe, user: user }
       it { should_not be_able_to :set_to_draft, moderation_recipe, user: user }
     end
 
     describe 'admin user' do
-      it { should_not be_able_to :set_to_moderation, draft_recipe, user: admin }
-      it { should be_able_to :set_to_publish, moderation_recipe, user: admin }
-      it { should be_able_to :set_to_draft, moderation_recipe, user: admin }
+      let(:user) { create(:admin) }
+      let(:draft_recipe) { create(:draft_recipe, user: create(:user)) }
+      let(:moderation_recipe) { create(:moderation_recipe, user: create(:user)) }
+      
+      it { should_not be_able_to :set_to_moderation, draft_recipe, user: user }
+      it { should be_able_to :set_to_publish, moderation_recipe, user: user }
+      it { should be_able_to :set_to_draft, moderation_recipe, user: user }
     end 
   end 
 end
