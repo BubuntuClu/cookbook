@@ -1,0 +1,12 @@
+#recipes
+  %h1 
+    Пользователь
+    = @user.email
+  %h1 
+    Рейтинг:  
+    = @user.rating
+  %h1 
+    Рецепты:
+  = render @recipes
+= will_paginate @recipes
+

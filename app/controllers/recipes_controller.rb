@@ -1,17 +1,14 @@
 class RecipesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :get_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:show]
+  before_action :find_recipe, only: [:show, :edit, :update, :destroy, :set_state]
+  before_action :build_comment, only: :show
+
+  authorize_resource
+
   respond_to :html
 
-  # authorize_resource
-
-  def index
-    # respond_with (@recipes = Recipe.all.page(params[:page]))
-    @recipes = Recipe.paginate(page: params[:page], per_page: 20)
-  end
-
   def show
-    respond_with @recipe
+    respond_with(@comments = @recipe.comments.only_user.includes(:user))
   end
 
   def new
@@ -24,7 +21,8 @@ class RecipesController < ApplicationController
   end
 
   def destroy
-    respond_with (@recipe.destroy) if can?(:destroy, @recipe)
+    @recipe.destroy if can?(:destroy, @recipe)
+    redirect_to user_profile_path(current_user)
   end
 
   def edit
@@ -35,14 +33,25 @@ class RecipesController < ApplicationController
     respond_with @recipe
   end
 
+  def set_state
+    if can?("set_to_#{params[:state]}".to_sym, @recipe)
+      @recipe.send("set_to_#{params[:state]}", params[:comment])
+    end
+    redirect_to admin_index_path unless params[:state] == 'moderation'
+  end
+
   private
 
-  def get_recipe
-    @recipe = Recipe.find(params[:id])
+  def find_recipe
+    @recipe = Recipe.find(params[:id]) if params[:id]
+    @recipe = Recipe.find(params[:recipe_id]) if params[:recipe_id]
   end
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
   end
 
+  def build_comment
+    @comment = @recipe.comments.build
+  end
 end

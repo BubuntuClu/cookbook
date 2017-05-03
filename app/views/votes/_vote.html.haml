@@ -1,0 +1,13 @@
+-if current_user
+  - vote_button = obj.voted_for_by?(current_user) ? "hidden" : ""
+  - unvote_button = obj.voted_for_by?(current_user) ? "" : "hidden"
+
+.votes
+  %div{ id: "vote_#{obj.class.name.underscore}_#{obj.id}" }
+    %p= "Рейтинг блюда: #{obj.rating}"
+  - if current_user && !current_user.author_of?(obj)
+    %div
+      %ul
+        %li= link_to 'Проголосовать "ЗА"', polymorphic_url([obj, :votes], value: 'up'), method: :post, remote: true, format: :json, class: "vote_up #{vote_button}"
+        %li= link_to 'Проголосовать "ПРОТИВ"', polymorphic_url([obj, :votes], value: 'down'), method: :post, remote: true, format: :json, class: "vote_down #{vote_button}"
+        %li= link_to 'Забрать голос', polymorphic_url([obj, :vote], [obj]), method: :delete, remote: true, format: :json, class: "unvote #{unvote_button}"
