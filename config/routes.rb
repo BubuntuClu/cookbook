@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations', omniauth_callbacks: 'omniauth_callbacks' } do
+    member do
+        get :conrifm_email
+      end
+    end
   root to: "welcome#index"
   get 'search', to: 'welcome#search'
 
@@ -19,4 +23,5 @@ Rails.application.routes.draw do
 
   resources :user_profiles
   resources :admin
+  match '/users/:id/finish_signup' => 'users#finish_signup', via: [:patch], :as => :finish_signup
 end
