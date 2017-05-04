@@ -1,0 +1,13 @@
+.row
+  .span4
+    = render 'searches/search'
+    - if can?(:create, Recipe)
+      =link_to 'Создать рецепт', new_recipe_path
+  .span8
+    - if !@recipes.any?
+      %p Нет результатов поиска
+    - else
+      #recipes
+        %h1 Рецепты
+        = render @recipes
+

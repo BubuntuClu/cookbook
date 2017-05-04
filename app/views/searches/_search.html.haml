@@ -1,0 +1,4 @@
+= form_tag(search_path, method: :get) do
+  = select_tag :search_type, options_for_select(Search::TYPES), id: 'search_type'
+  = text_field :search, nil, type: 'search', id: 'search'
+  = submit_tag 'Искать'
