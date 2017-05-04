@@ -18,3 +18,5 @@
 
 config/*.yml
 public/uploads/
+config/*.sphinx.conf
+db/sphinx

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   devise_for :users
   root to: "welcome#index"
+  get 'search', to: 'welcome#search'
 
   concern :votable do
     resources :votes, only: [:create, :destroy]
