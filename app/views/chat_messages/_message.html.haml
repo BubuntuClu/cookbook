@@ -1,0 +1,7 @@
+%div.message
+  %p.author
+    - if current_user.author_of?(message)
+      Я
+    -else
+      = message.user.email
+  %p.text= message.body

@@ -21,7 +21,12 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  resources :user_profiles
+  resources :user_profiles do
+    resources :chat_messages
+  end
+  
   resources :admin
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:patch], :as => :finish_signup
+
+  mount ActionCable.server => '/cable'
 end

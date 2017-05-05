@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504115645) do
+ActiveRecord::Schema.define(version: 20170504155807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 20170504115645) do
     t.datetime "updated_at"
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "companion_id"
+    t.string   "chat_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["user_id"], name: "index_chats_on_user_id", using: :btree
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string   "body"
     t.boolean  "by_admin"
@@ -66,6 +75,15 @@ ActiveRecord::Schema.define(version: 20170504115645) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id", using: :btree
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.string   "chat_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "recipes", force: :cascade do |t|
