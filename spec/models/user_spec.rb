@@ -6,6 +6,8 @@ RSpec.describe User do
     it { should have_many(:votes) }
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:authorizations) }
+    it { should have_many(:chats).dependent(:destroy) }
+    it { should have_many(:messages).dependent(:destroy) }
   end
 
   describe 'validations' do

@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :votes, foreign_key: :user_id
   has_many :authorizations, dependent: :destroy
+  has_many :chats, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   def author_of?(obj)
     id == obj.user_id

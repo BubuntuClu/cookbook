@@ -20,3 +20,7 @@
 //= require ingredient
 //= require jquery.infinitescroll
 //= require bootsy
+//= require action_cable
+
+var App = App || {};
+App.cable = ActionCable.createConsumer();

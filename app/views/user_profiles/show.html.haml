@@ -2,6 +2,7 @@
   %h1 
     Пользователь
     = @user.email
+    = link_to 'Написать сообщение', user_profile_chat_messages_path(@user)
   %h1 
     Рейтинг:  
     = @user.rating
