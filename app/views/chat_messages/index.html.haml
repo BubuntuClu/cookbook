@@ -1,0 +1,11 @@
+.chat
+  .messages
+    -if @messages.any?
+      - @messages.each do |message|      
+        = render 'chat_messages/message', message: message        
+  .new_message
+    = form_for :message, url: user_profile_chat_messages_path, remote: true do |f|
+      = f.label :body
+      = f.text_area :body
+      = f.hidden_field :chat_id, value: @chat_id
+      = f.submit 'Написать сообщение'

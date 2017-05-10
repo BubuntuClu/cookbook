@@ -4,12 +4,16 @@ FactoryGirl.define do
   end
 
   factory :user do
+    after(:build) { |u| u.skip_confirmation_notification! }
+    after(:create) { |u| u.confirm }
     email
     password '123456'
     password_confirmation '123456'
   end
 
   factory :admin, class: "User" do
+    after(:build) { |u| u.skip_confirmation_notification! }
+    after(:create) { |u| u.confirm }
     email
     password '123456'
     password_confirmation '123456'

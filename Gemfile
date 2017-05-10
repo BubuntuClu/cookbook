@@ -48,6 +48,14 @@ gem 'responders'
 gem 'simple_form'
 gem 'will_paginate'
 gem 'bootsy'
+gem 'mysql2'
+gem 'thinking-sphinx'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'mailcatcher'
+gem 'dotenv'
+gem 'gon'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,6 +64,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -75,4 +84,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
+  gem 'capybara-email'
 end
