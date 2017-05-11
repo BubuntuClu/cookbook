@@ -5,9 +5,10 @@ class ConfirmationsController < Devise::ConfirmationsController
     if user
       user.update!(account_confirmed: true) 
       flash[:notice] = 'Ваш email подтвержден. Можете авторизоваться'
+      super
     else
       flash[:notice] = 'Что-то пошло не так'
+      redirect_to root_path
     end
-    redirect_to root_path
   end
 end

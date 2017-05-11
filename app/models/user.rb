@@ -5,6 +5,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   before_create :confirmation_token
+  after_create :create_friends_list
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
@@ -14,6 +15,7 @@ class User < ApplicationRecord
   has_many :authorizations, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_one :friends_list, dependent: :destroy
 
   def author_of?(obj)
     id == obj.user_id
@@ -49,5 +51,9 @@ class User < ApplicationRecord
     end
     
     user
+  end
+
+  def create_friends_list
+    self.build_friends_list
   end
 end

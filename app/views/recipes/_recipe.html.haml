@@ -8,6 +8,6 @@
   %p 
     Автор:
     - if recipe.user == current_user
-      =link_to "#{recipe.user.email}", user_profiles_path
+      = link_to "#{recipe.user.email}", user_profiles_path
     -else
-      =link_to "#{recipe.user.email}", user_profile_path(recipe.user.id)
+      = link_to "#{recipe.user.email}", user_profile_path(recipe.user.id)
