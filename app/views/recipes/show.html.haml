@@ -1,7 +1,7 @@
 .h2#title_recipe
   = @recipe.title
     
-%p Превьюшка рецепта
+%img{ alt: @recipe.title, src: @recipe.preview_image_url(:thumb) }
 %br
 
 .ingredients
@@ -11,7 +11,7 @@
   %br
 
 .recipe_description
-  = @recipe.description
+  = @recipe.description.html_safe
 - if current_user
   .links
     - if current_user.author_of?(@recipe) && @recipe.draft?

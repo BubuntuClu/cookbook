@@ -16,6 +16,7 @@ class RecipesController < ApplicationController
   end
 
   def create
+    binding.pry
     @recipe = Recipe.create(recipe_params.merge(user_id: current_user.id))
     respond_with @recipe
   end
@@ -48,7 +49,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
+    params.require(:recipe).permit(:title, :description, :preview_image, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
   end
 
   def build_comment
