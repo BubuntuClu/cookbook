@@ -1,0 +1,4 @@
+- if current_user.friends_list.friends.include?(id)
+  = link_to 'Убрать из друзей', user_profile_remove_friend_url(id), method: :post, remote: true
+- else
+  = link_to 'Добавить в друзья', user_profile_add_friend_url(id), method: :post, remote: true

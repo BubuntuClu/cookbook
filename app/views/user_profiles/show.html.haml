@@ -3,6 +3,8 @@
     Пользователь
     = @user.email
     = link_to 'Написать сообщение', user_profile_chat_messages_path(@user)
+    #friend_link
+      = render 'friend_link', id: @user.id
   %h1 
     Рейтинг:  
     = @user.rating

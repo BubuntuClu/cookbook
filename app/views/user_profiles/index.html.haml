@@ -1,8 +1,13 @@
-#recipes
-  %h1 
-    Мои рейтинг: 
-    = current_user.rating
-  %h1 Мои рецепты
-  = render @recipes
-= will_paginate @recipes
-
+.col-md-6
+  #recipes
+    %h1 
+      Мои рейтинг: 
+      = current_user.rating
+    %h1 Мои рецепты
+    = render @recipes
+  = will_paginate @recipes
+.col-md-6
+  #friends
+    %h1 Мои друзья:
+    - @friends.each do |friend|
+      = render 'friends/friend', friend: friend

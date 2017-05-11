@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   end
 
   resources :user_profiles do
+    post 'add_friend', to: 'user_profiles#add_friend'
+    post 'remove_friend', to: 'user_profiles#remove_friend'
     resources :chat_messages
   end
   

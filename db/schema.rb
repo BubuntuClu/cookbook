@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510115845) do
+ActiveRecord::Schema.define(version: 20170511113511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(version: 20170510115845) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
+  create_table "friends_lists", force: :cascade do |t|
+    t.integer  "friends",    default: [],              array: true
+    t.integer  "user_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["user_id"], name: "index_friends_lists_on_user_id", using: :btree
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.string   "name"
     t.string   "measure"
@@ -113,7 +121,7 @@ ActiveRecord::Schema.define(version: 20170510115845) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.boolean  "admin",                  default: false
-    t.float    "rating",                 default: 0.0
+    t.integer  "rating",                 default: 0
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

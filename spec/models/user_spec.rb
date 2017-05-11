@@ -8,6 +8,7 @@ RSpec.describe User do
     it { should have_many(:authorizations) }
     it { should have_many(:chats).dependent(:destroy) }
     it { should have_many(:messages).dependent(:destroy) }
+    it { should have_one(:friends_list).dependent(:destroy) }
   end
 
   describe 'validations' do
