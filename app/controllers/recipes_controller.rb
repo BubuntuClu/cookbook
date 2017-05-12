@@ -16,7 +16,6 @@ class RecipesController < ApplicationController
   end
 
   def create
-    binding.pry
     @recipe = Recipe.create(recipe_params.merge(user_id: current_user.id))
     respond_with @recipe
   end
