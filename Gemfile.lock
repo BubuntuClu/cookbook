@@ -398,6 +398,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.0.5)
   mailcatcher
+  mini_magick
   mysql2
   omniauth
   omniauth-facebook
