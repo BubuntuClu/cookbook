@@ -15,6 +15,7 @@ class Recipe < ApplicationRecord
   scope :only_published, ->{ where(status: :published) }
   scope :only_moderation, ->{ where(status: :moderation) }
 
+  mount_uploader :preview_image, FileUploader
 
   def set_to_draft(comment)
     self.comments.create(body: comment[:body], by_admin: true)

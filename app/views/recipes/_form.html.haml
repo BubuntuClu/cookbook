@@ -9,7 +9,7 @@
 
     .preview_image
       Превью блюда
-      %input{ type: 'file', id: 'file', name: '[preview_image]' }
+      = f.file_field :preview_image, miltipart: true
 
 
     .recipe_ingredients

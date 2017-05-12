@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504155807) do
+ActiveRecord::Schema.define(version: 20170511113511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(version: 20170504155807) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
+  create_table "friends_lists", force: :cascade do |t|
+    t.integer  "friends",    default: [],              array: true
+    t.integer  "user_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["user_id"], name: "index_friends_lists_on_user_id", using: :btree
+  end
+
   create_table "ingredients", force: :cascade do |t|
     t.string   "name"
     t.string   "measure"
@@ -90,10 +98,11 @@ ActiveRecord::Schema.define(version: 20170504155807) do
     t.string   "title"
     t.string   "description"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "status",      default: 0
-    t.integer  "rating",      default: 0
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "status",        default: 0
+    t.integer  "rating",        default: 0
+    t.string   "preview_image"
     t.index ["title"], name: "index_recipes_on_title", using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
   end
