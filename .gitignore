@@ -16,7 +16,7 @@
 # Ignore Byebug command history file.
 .byebug_history
 
-config/*.yml
+config/database.yml
 public/uploads/
 config/*.sphinx.conf
 db/sphinx

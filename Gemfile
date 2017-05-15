@@ -56,6 +56,11 @@ gem 'omniauth-twitter'
 gem 'mailcatcher'
 gem 'dotenv'
 gem 'gon'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
+gem 'whenever'
+gem 'mini_magick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -75,6 +80,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

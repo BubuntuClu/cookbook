@@ -1,12 +1,16 @@
-.recipe
-  = link_to "#{recipe.title}", recipe_path(recipe.id)
-  %br
-  %img{ alt: recipe.title, src: recipe.preview_image_url(:thumb) }
-  %p 
-    Рейтинг
+.recipe.panel.panel-success
+  .panel-heading
+    %h3.panel-title
+      = link_to "#{recipe.title}", recipe_path(recipe.id)
+  .panel-body  
+    %img{ alt: recipe.title, src: recipe.preview_image_url(:thumb) }
+    %br
+    %span.label.label-success
+      Рейтинг
     = recipe.rating
-  %p 
-    Автор:
+    %br
+    %span.label.label-success
+      Автор
     - if recipe.user == current_user
       = link_to "#{recipe.user.email}", user_profiles_path
     -else
