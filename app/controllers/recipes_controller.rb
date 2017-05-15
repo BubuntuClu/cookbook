@@ -16,7 +16,8 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.create(recipe_params.merge(user_id: current_user.id))
+    @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
+    @recipe.save!
     respond_with @recipe
   end
 
