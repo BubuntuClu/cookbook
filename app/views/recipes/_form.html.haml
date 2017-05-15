@@ -26,10 +26,5 @@
         .links
           = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control'   
       %br
-    .recipe_description
-      %p.error_msg
-        = recipe.errors.messages.dig(:title, 0)
-      = f.label :description
-      = f.bootsy_area :description, class: 'wide', editor_options: { link: false, color: false, disabled: true }, class: 'form-control', rows: 8
-      %br
+
       = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }", class: 'btn btn-default'
