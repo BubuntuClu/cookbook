@@ -7,7 +7,7 @@ class Recipe < ApplicationRecord
   has_many :comments, dependent: :destroy
   belongs_to :user
   
-  validates :title, presence: { message: 'не может быть пустым' }
+  validates :title, :description, presence: { message: 'не может быть пустым' }
 
   accepts_nested_attributes_for :ingredients, reject_if: :all_blank, allow_destroy: true
   enum status: [:draft, :moderation, :published]
