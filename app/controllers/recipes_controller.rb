@@ -17,7 +17,7 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
-    if @recipe.save!
+    if @recipe.save
       redirect_to recipe_path(@recipe)
       # respond_with @recipe
     else
