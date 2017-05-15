@@ -5,24 +5,31 @@
 %br
 
 .ingredients
+%h3 Какие ингредиенты нам понадобяться:
 - @recipe.ingredients.each do |ingredient|
   = ingredient.name
   = ingredient.measure
   %br
 
+%h3 Как готовить блюдо:
 .recipe_description
   = @recipe.description.html_safe
 - if current_user
   .links
     - if current_user.author_of?(@recipe) && @recipe.draft?
       - if can?(:set_to_moderation, @recipe)
-        = link_to 'Отправить на модерацию', recipe_moderation_path(@recipe, state: :moderation), method: :post, remote: true
-      = link_to 'Редактировать', edit_recipe_path(@recipe)
-      = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' } 
+        = link_to 'Отправить на модерацию', recipe_moderation_path(@recipe, state: :moderation), method: :post, remote: true, class: 'btn btn-success'
+      = link_to 'Редактировать', edit_recipe_path(@recipe), class: 'btn btn-warning'
+      = link_to 'Удалить', recipe_path(@recipe), method: :delete, data: { confirm: 'Вы уверены?' }, class: 'btn btn-danger'
       %br
       .admin_comments
         - @recipe.comments.only_admin.each do |comment|
-          %p= comment.body
+          .panel.panel-warning
+            .panel-heading
+              %h3.panel-title
+                Администратор портала
+            .panel-body
+              = comment.body
           %br
     - if current_user.author_of?(@recipe) && @recipe.moderation?
       %p На модерации
@@ -35,9 +42,9 @@
         = form_for :comment, url: recipe_draft_path(@recipe, state: :draft), remote: true do |f|
           = f.label :body
           = f.text_area :body
-          = f.submit 'Вернуть рецепт на доработку'
+          = f.submit 'Вернуть рецепт на доработку', class: 'btn btn-danger'
   - if can?(:set_to_publish, @recipe)
-    = link_to 'Опубликовать рецепт', recipe_publish_path(@recipe, state: :publish), method: :post
+    = link_to 'Опубликовать рецепт', recipe_publish_path(@recipe, state: :publish), method: :post, class: 'btn btn-success'
 
 - if @recipe.published?
   =render 'votes/vote', obj: @recipe
@@ -45,10 +52,12 @@
     .user_comments_panel
       .comment_errors
       .new_comment
-        = form_for [@recipe, @comment], remote: true do |f|
-          = f.label :body
-          = f.text_area :body
-          = f.submit 'Оставить комментарий'
+        = form_for [@recipe, @comment], remote: true, class: 'form-horizontal' do |f|
+          %fieldset
+            = f.label :body, 'Оставьте свой комментарий для этого рецепта', class: 'control-label'
+            = f.text_area :body, class: 'form-control'
+            %br
+            = f.submit 'Оставить комментарий', class: 'btn btn-default' 
   Комментарии пользователей
   %br
   .user_comments

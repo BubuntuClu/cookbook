@@ -4,10 +4,12 @@
 
 .votes
   %div{ id: "vote_#{obj.class.name.underscore}_#{obj.id}" }
-    %p= "Рейтинг блюда: #{obj.rating}"
+    %h3= "Рейтинг блюда: #{obj.rating}"
   - if current_user && !current_user.author_of?(obj)
     %div
-      %ul
-        %li= link_to 'Проголосовать "ЗА"', polymorphic_url([obj, :votes], value: 'up'), method: :post, remote: true, format: :json, class: "vote_up #{vote_button}"
-        %li= link_to 'Проголосовать "ПРОТИВ"', polymorphic_url([obj, :votes], value: 'down'), method: :post, remote: true, format: :json, class: "vote_down #{vote_button}"
-        %li= link_to 'Забрать голос', polymorphic_url([obj, :vote], [obj]), method: :delete, remote: true, format: :json, class: "unvote #{unvote_button}"
+      %ul{ class: 'vote' }
+        %li= link_to 'Проголосовать "ЗА"', polymorphic_url([obj, :votes], value: 'up'), method: :post, remote: true, format: :json, class: "vote_up #{vote_button} btn btn-success"
+        %br
+        %li= link_to 'Проголосовать "ПРОТИВ"', polymorphic_url([obj, :votes], value: 'down'), method: :post, remote: true, format: :json, class: "vote_down #{vote_button} btn btn-danger"
+        %br
+        %li= link_to 'Забрать голос', polymorphic_url([obj, :vote], [obj]), method: :delete, remote: true, format: :json, class: "unvote #{unvote_button} btn btn-info"

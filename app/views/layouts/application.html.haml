@@ -18,14 +18,17 @@
 
 
   %body
-    .navbar.navbar-default.navbar-static-top
-      .container
-        %button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-        %a.navbar-brand{ href: root_path } CookBook
-        .navbar-collapse.collapse.navbar-responsive-collapse
+    %nav.navbar.navbar-inverse
+      .container-fliud
+        .navbar-header
+          %button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2"
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+          %a.navbar-brand{ href: root_path } CookBook
+
+        .navbar-collapse.collapse#bs-example-navbar-collapse-2
           %ul.nav.navbar-nav
             - if user_signed_in? 
               %li= link_to 'Sign out', destroy_user_session_path, method: :delete
@@ -34,7 +37,15 @@
                 %li= link_to 'Admin panel', admin_index_path
             -else
               %li= link_to 'Sign in', new_user_session_path
-
+          = form_tag search_path, method: :get, class: 'navbar-form navbar-left' do
+            = select_tag :search_type, options_for_select(Search::TYPES), id: 'search_type', class: 'selectpicker form-control'
+            .form-group
+              = text_field :search, nil, type: 'search', id: 'search', class: 'form-control'
+            = button_tag 'Искать', class: 'btn btn-default', type: 'submit'
+          - if can?(:create, Recipe)
+            %ul.nav.navbar-nav.navbar-right
+              %li
+                =link_to 'Создать рецепт', new_recipe_path
     .container
       = bootstrap_flash
       = yield

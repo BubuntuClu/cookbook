@@ -1,18 +1,22 @@
 .recipe
-  = form_for recipe, html: { miltipart: true } do |f|
-    .recipe_title
+  = form_for recipe, html: { miltipart: true }, class: 'form-horizontal' do |f|
+    %fieldset
+      %legend
+        Новый рецепт
+    .form-group
       %p.error_msg
         = recipe.errors.messages.dig(:title, 0)
 
-      = f.label :title
-      = f.text_field :title
+      = f.label :title, class: 'col-lg-2 control-label'
+      .col-lg-10
+        = f.text_field :title, class: 'form-control'
 
-    .preview_image
-      Превью блюда
-      = f.file_field :preview_image, miltipart: true
-
-
-    .recipe_ingredients
+      %label.col-lg-2.control-label Превью блюда
+      .col-lg-10
+        = f.file_field :preview_image, miltipart: true, class: 'form-control'
+      %br
+      %label.col-lg-12.control-label Ингредиенты
+      %br
       - unless recipe.new_record?
         - recipe.ingredients.each do |ingredient|
           = render 'ingredients/ingredient', ingr: ingredient
@@ -20,12 +24,12 @@
       = f.simple_fields_for :ingredients, recipe.ingredients.build do |ingredient|
         = render 'ingredient_fields', f: ingredient
         .links
-          = link_to_add_association 'Добавить ингридиент', f, :ingredients      
-      
+          = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control'   
+      %br
     .recipe_description
       %p.error_msg
         = recipe.errors.messages.dig(:title, 0)
       = f.label :description
-      = f.bootsy_area :description, class: 'wide', editor_options: { link: false, color: false, disabled: true }
+      = f.bootsy_area :description, class: 'wide', editor_options: { link: false, color: false, disabled: true }, class: 'form-control', rows: 8
       %br
-      = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }"
+      = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }", class: 'btn btn-default'
