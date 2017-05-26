@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_many :recipes
   has_many :comments, dependent: :destroy
+  has_many :discussions, dependent: :destroy
   has_many :votes, foreign_key: :user_id
   has_many :authorizations, dependent: :destroy
   has_many :chats, dependent: :destroy

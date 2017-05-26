@@ -1,10 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Comment, type: :model do
+RSpec.describe Discussion, type: :model do
   describe 'associations' do
-    it { should belong_to(:recipe) }
+    it { should belong_to(:comment) }
     it { should belong_to(:user) }
-    it { should have_many(:discussions).dependent(:destroy) }
   end
 
   describe 'validations' do
