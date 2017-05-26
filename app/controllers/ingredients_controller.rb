@@ -6,7 +6,4 @@ class IngredientsController < ApplicationController
     ingr.destroy
     render json: ingr.id
   end
-
-  private
-
 end

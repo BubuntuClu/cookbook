@@ -3,4 +3,6 @@
     %p= ingr.name
   .measure
     %p= ingr.measure
+  .price
+    %p= ingr.price
   %img.js__delete_ingredient{ del_id: "#{ingr.id}", alt: '', src: image_url('delete.svg'), data: { title: 'Удалить' } }

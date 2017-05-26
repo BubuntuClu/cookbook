@@ -6,10 +6,18 @@
 
 .ingredients
 %h3 Какие ингредиенты нам понадобяться:
+- total_price = 0
 - @recipe.ingredients.each do |ingredient|
   = ingredient.name
   = ingredient.measure
+  = ingredient.price
+  - if ingredient.price.present?
+    - total_price += ingredient.price
   %br
+- if total_price > 0
+  %h4
+    Цена блюда:
+  = total_price
 
 %h3 Как готовить блюдо:
 .recipe_description
