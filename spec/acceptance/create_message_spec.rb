@@ -32,5 +32,33 @@ feature 'Create message', %q{
   end
 
   context "multiple sessions" do
+    scenario "message appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit user_profile_path(user2)
+        click_on 'Написать сообщение'
+      end
+
+      Capybara.using_session('user2') do
+        sign_in(user2)
+        visit user_profile_path(user)
+        click_on 'Написать сообщение'      
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Body', with: 'Какой-то осмысленный текст'
+        click_on 'Написать сообщение'
+
+        within '.message' do
+          expect(page).to have_content 'Я'
+          expect(page).to have_content 'Какой-то осмысленный текст'
+        end
+      end
+
+      Capybara.using_session('user2') do
+        expect(page).to have_content user.email
+        expect(page).to have_content 'Какой-то осмысленный текст'
+      end
+    end
   end
 end
