@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
   end
 
   def search
-    @recipes = Search.run(params[:search_type], params[:search])
+    @result = Search.run(params[:search_type], params[:search])
+    @type = params[:search_type]
   end
 end

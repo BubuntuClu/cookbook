@@ -1,5 +1,5 @@
 class Search
-  TYPES = %w(recipe ingredient).freeze
+  TYPES = %w(recipe ingredient user).freeze
 
   class << self
     def run(type, search)
@@ -7,12 +7,14 @@ class Search
 
       request = ThinkingSphinx::Query.escape(search.to_s)
 
-      search_field = "title".to_sym
-      if type == 'recipe'
-        results = Recipe.search conditions: { title: request, status: Recipe.statuses[:published] }
-      else
+      case type
+      when 'user'
+        results = User.search conditions: { email: request }
+      when 'ingredient'
         results = Ingredient.search conditions: { name: request, status: Recipe.statuses[:published] }
         results = results.map(&:recipe)
+      else
+        results = Recipe.search conditions: { title: request, status: Recipe.statuses[:published] }
       end
       results
     end
