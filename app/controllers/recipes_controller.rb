@@ -16,8 +16,13 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.create(recipe_params.merge(user_id: current_user.id))
-    respond_with @recipe
+    @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
+    if @recipe.save
+      redirect_to recipe_path(@recipe)
+      # respond_with @recipe
+    else
+      render :new
+    end
   end
 
   def destroy

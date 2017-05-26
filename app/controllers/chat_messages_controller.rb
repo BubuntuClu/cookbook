@@ -36,8 +36,9 @@ class ChatMessagesController < ApplicationController
     return if @message.errors.any?
     ActionCable.server.broadcast(
       "chat_#{@message.chat_id}",
-      message: @message,
-      author: current_user.id
+      message: @message.body,
+      author: current_user.email,
+      author_id: current_user.id
     )
   end
 end

@@ -60,6 +60,7 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
 gem 'whenever'
+gem 'mime-types', require: 'mime/types'
 gem 'mini_magick'
 
 group :development, :test do
