@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     post 'moderation', to: 'recipes#set_state'
     post 'draft', to: 'recipes#set_state'
     post 'publish', to: 'recipes#set_state'
-    resources :comments
+    resources :comments 
+  end
+
+  resources :comments do
+    resources :discussions
   end
 
   resources :user_profiles do

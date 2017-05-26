@@ -2,6 +2,8 @@ class Comment < ApplicationRecord
   belongs_to :recipe
   belongs_to :user
   
+  has_many :discussions, dependent: :destroy
+  
   validates :body, presence: { message: 'не может быть пустым' }
 
   scope :only_admin, ->{ where(by_admin: true) }

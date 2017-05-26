@@ -28,7 +28,7 @@ feature 'Create comment', %q{
   private
 
   def give_an_recipe_comment
-    within '.user_comments_panel' do
+    within '.new_comment' do
       fill_in 'Body', with: 'This is comment for recipe'
       click_on 'Оставить комментарий'
     end

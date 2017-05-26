@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   private
 
   def find_recipe
-    @recipe = Recipe.find(params[:recipe_id])
+    @recipe = Recipe.friendly.find(params[:recipe_id])
   end
 
   def comment_params
