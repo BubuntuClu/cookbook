@@ -48,8 +48,8 @@ class RecipesController < ApplicationController
   private
 
   def find_recipe
-    @recipe = Recipe.find(params[:id]) if params[:id]
-    @recipe = Recipe.find(params[:recipe_id]) if params[:recipe_id]
+    @recipe = Recipe.friendly.find(params[:id]) if params[:id]
+    @recipe = Recipe.friendly.find(params[:recipe_id]) if params[:recipe_id]
   end
 
   def recipe_params

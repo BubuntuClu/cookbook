@@ -1,7 +1,7 @@
 .recipe.panel.panel-success
   .panel-heading
     %h3.panel-title
-      = link_to "#{recipe.title}", recipe_path(recipe.id)
+      = link_to "#{recipe.title}", recipe_path(recipe)
   .panel-body  
     %img{ alt: recipe.title, src: recipe.preview_image_url(:thumb) }
     %br

@@ -116,6 +116,8 @@ GEM
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     gon (6.1.0)
@@ -389,6 +391,7 @@ DEPENDENCIES
   dotenv
   dotenv-deployment
   factory_girl_rails
+  friendly_id (~> 5.1.0)
   gon
   haml
   haml-rails
