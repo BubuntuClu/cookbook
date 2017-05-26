@@ -5,6 +5,10 @@
 
     = f.label :measure, class: 'form-control'
     = f.text_field :measure, class: 'form-control'
+
+    = f.label :price, class: 'form-control'
+    = f.number_field :price, class: 'form-control', step: 0.1
+
     = link_to_remove_association 'Delete ingredient', f , class: 'btn btn-default'
 %br
 %br
