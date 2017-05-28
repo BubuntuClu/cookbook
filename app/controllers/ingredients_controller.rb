@@ -6,4 +6,14 @@ class IngredientsController < ApplicationController
     ingr.destroy
     render json: ingr.id
   end
+
+  def ingr_list
+    if params[:query].present?
+      @names = Ingredient
+        .where('name ILIKE ?', "%#{params[:query]}%")
+        .pluck(:name)
+    end
+    @names ||= []                  
+    render json: @names
+  end
 end

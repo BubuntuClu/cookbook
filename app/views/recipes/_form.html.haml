@@ -24,7 +24,7 @@
       = f.simple_fields_for :ingredients, recipe.ingredients.build do |ingredient|
         = render 'ingredient_fields', f: ingredient
         .links
-          = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control'   
+          = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control' 
       %br
     .recipe_description
       %p.error_msg
