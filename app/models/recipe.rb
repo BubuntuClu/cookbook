@@ -33,4 +33,8 @@ class Recipe < ApplicationRecord
   def set_to_moderation(*args)
     self.update_attributes(status: :moderation) 
   end
+
+  def normalize_friendly_id(text)
+    text.to_slug.transliterate(:russian).normalize.to_s
+  end
 end
