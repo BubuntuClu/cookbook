@@ -1,5 +1,5 @@
 %div{ id: "friend_#{friend.id}" }
-  = link_to "#{friend.email}", user_profile_path(friend)
-  = link_to 'Написать сообщение', user_profile_chat_messages_path(friend)
-  = link_to 'Убрать из друзей', user_profile_remove_friend_url(friend, type: 'friend_list'), method: :post, remote: true
+  = link_to "#{friend.email}", user_profile_path(friend.id)
+  = link_to 'Написать сообщение', user_profile_chat_messages_path(friend.id)
+  = link_to 'Убрать из друзей', user_profile_remove_friend_url(friend.id, type: 'friend_list'), method: :post, remote: true
 %br

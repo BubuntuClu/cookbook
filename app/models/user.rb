@@ -19,7 +19,6 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_one :friends_list, dependent: :destroy
 
-  friendly_id :email, use: :slugged
 
   def author_of?(obj)
     id == obj.user_id
