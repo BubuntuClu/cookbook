@@ -25,6 +25,12 @@ feature 'User', %q{
     expect(page).to have_content recipe_with_ingredient.title
   end
 
+  scenario 'try to find user by email', js: true do
+    make_search('user', user.email)
+    expect(page).to have_content 'Пользователи'
+    expect(page).to have_content user.email
+  end
+
   scenario 'no result', js: true do
     make_search('recipe', 'asdasdasd')
     expect(page).to have_content 'Нет результатов поиска'

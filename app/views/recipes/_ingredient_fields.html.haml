@@ -1,10 +1,28 @@
 .nested-fields
   .col-lg-10
     = f.label :name, class: 'form-control'
-    = f.text_field :name, class: 'form-control'
+    = f.text_field :name, class: 'form-control name_label'
 
     = f.label :measure, class: 'form-control'
     = f.text_field :measure, class: 'form-control'
+
+    = f.label :price, class: 'form-control'
+    = f.number_field :price, class: 'form-control', step: 0.1
+
     = link_to_remove_association 'Delete ingredient', f , class: 'btn btn-default'
 %br
 %br
+
+:javascript
+  $(document).ready(function(){
+    $('.name_label').autocomplete({
+      source: function(request, response){
+        $.get("#{ingr_list_path}", {
+          query: request.term
+        }, function(data){
+          response(data);
+        });
+      },
+      minLength: 2
+    });
+  });

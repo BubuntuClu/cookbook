@@ -4,3 +4,12 @@
       = comment.author_name 
   .panel-body
     = comment.body
+  %div{ id: "comment_discussions_#{comment.id}" }
+    - comment.discussions.each do |discussion|
+      = render 'discussions/discussion', discussion: discussion
+  = form_for [comment, comment.discussions.build], remote: true, class: 'form-horizontal' do |f|
+    %fieldset
+      = f.label :body, 'Устройте дискуссию', class: 'control-label'
+      = f.text_area :body, class: 'form-control', id: "comment_discussions_body_#{comment.id}"
+      %br
+      = f.submit 'Дискутировать', class: 'btn btn-default' 

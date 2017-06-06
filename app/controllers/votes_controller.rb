@@ -40,7 +40,7 @@ class VotesController < ApplicationController
 
   def get_obj_by_url(request)
     klass, id = request.path.split('/')[1,2]
-    klass.singularize.classify.constantize.find(id)
+    klass.singularize.classify.constantize.friendly.find(id)
   end
 
 end

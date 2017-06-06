@@ -17,6 +17,13 @@ RSpec.describe Search do
     Search.run('ingredient', request)
   end
 
+  it 'calls search in user' do
+    request = "user"
+    escaped_request = ThinkingSphinx::Query.escape(request)
+    expect(User).to receive(:search).with({ conditions: { email: escaped_request } } ).and_call_original
+    Search.run('user', request)
+  end
+
   it 'return empty array', type: :sphinx do
     question = create(:recipe)
     index

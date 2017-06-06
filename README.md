@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Проект позволяет задать вопрос и получить на него ответ.
 
-Things you may want to cover:
+Проект выполнялся в 1ой половине 2017 года.
 
-* Ruby version
+Цели проекта - создание приложения, где можно хранить рецепты по приготовлению блюд. Так же просматривать рецеты других пользователей. Общаться с другими пользователями через встроенный чат.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Технологии: Rspec, ThinkingSphinx, ActionCable, OAuth авторизация через соц. сети.

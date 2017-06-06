@@ -19,7 +19,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(recipe_params.merge(user_id: current_user.id))
     if @recipe.save
       redirect_to recipe_path(@recipe)
-      # respond_with @recipe
     else
       render :new
     end
@@ -48,12 +47,12 @@ class RecipesController < ApplicationController
   private
 
   def find_recipe
-    @recipe = Recipe.find(params[:id]) if params[:id]
-    @recipe = Recipe.find(params[:recipe_id]) if params[:recipe_id]
+    @recipe = Recipe.friendly.find(params[:id]) if params[:id]
+    @recipe = Recipe.friendly.find(params[:recipe_id]) if params[:recipe_id]
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :preview_image, :bootsy_image_gallery_id, ingredients_attributes:[:name,  :measure, :id, :_destroy])
+    params.require(:recipe).permit(:title, :description, :preview_image, :bootsy_image_gallery_id, ingredients_attributes:[:name, :measure, :price, :id, :_destroy])
   end
 
   def build_comment

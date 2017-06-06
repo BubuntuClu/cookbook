@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  extend FriendlyId
 
   TEMP_EMAIL_PREFIX = 'temp@temp'
   TEMP_EMAIL_REGEX = /\Atemp@temp/
@@ -11,11 +12,13 @@ class User < ApplicationRecord
 
   has_many :recipes
   has_many :comments, dependent: :destroy
+  has_many :discussions, dependent: :destroy
   has_many :votes, foreign_key: :user_id
   has_many :authorizations, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_one :friends_list, dependent: :destroy
+
 
   def author_of?(obj)
     id == obj.user_id

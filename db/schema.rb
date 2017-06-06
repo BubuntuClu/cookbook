@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511113511) do
+ActiveRecord::Schema.define(version: 20170526175511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,28 @@ ActiveRecord::Schema.define(version: 20170511113511) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
+  create_table "discussions", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_discussions_on_comment_id", using: :btree
+    t.index ["user_id"], name: "index_discussions_on_user_id", using: :btree
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
   create_table "friends_lists", force: :cascade do |t|
     t.integer  "friends",    default: [],              array: true
     t.integer  "user_id"
@@ -82,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170511113511) do
     t.integer  "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float    "price"
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id", using: :btree
   end
 
@@ -103,6 +126,8 @@ ActiveRecord::Schema.define(version: 20170511113511) do
     t.integer  "status",        default: 0
     t.integer  "rating",        default: 0
     t.string   "preview_image"
+    t.string   "slug"
+    t.index ["slug"], name: "index_recipes_on_slug", using: :btree
     t.index ["title"], name: "index_recipes_on_title", using: :btree
     t.index ["user_id"], name: "index_recipes_on_user_id", using: :btree
   end
@@ -126,9 +151,11 @@ ActiveRecord::Schema.define(version: 20170511113511) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean  "account_confirmed",      default: false
+    t.string   "slug"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["slug"], name: "index_users_on_slug", using: :btree
   end
 
   create_table "votes", force: :cascade do |t|

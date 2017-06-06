@@ -24,7 +24,7 @@
       = f.simple_fields_for :ingredients, recipe.ingredients.build do |ingredient|
         = render 'ingredient_fields', f: ingredient
         .links
-          = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control'   
+          = link_to_add_association 'Добавить ингридиент', f, :ingredients, class: 'btn btn-default form-control' 
       %br
     .recipe_description
       %p.error_msg
@@ -32,4 +32,4 @@
       = f.label :description
       = f.bootsy_area :description, class: 'wide', editor_options: { link: false, color: false, disabled: true }, class: 'form-control', rows: 8
       %br
-      = f.submit "#{recipe.new_record? ? 'Создать рецепт' : 'Обновить рецепт' }", class: 'btn btn-default'
+      = f.submit "#{recipe.new_record? ? 'Оформить рецепт' : 'Обновить рецепт' }", class: 'btn btn-default'

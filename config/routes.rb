@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     post 'moderation', to: 'recipes#set_state'
     post 'draft', to: 'recipes#set_state'
     post 'publish', to: 'recipes#set_state'
-    resources :comments
+    resources :comments 
+  end
+
+  resources :comments do
+    resources :discussions
   end
 
   resources :user_profiles do
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
   
   resources :admin
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:patch], :as => :finish_signup
+  get 'ingr_list', to: 'ingredients#ingr_list', as: :ingr_list
 
   mount ActionCable.server => '/cable'
 end

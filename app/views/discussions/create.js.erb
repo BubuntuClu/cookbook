@@ -1,0 +1,8 @@
+<% if @discussion.errors.present? %>
+  <% @discussion.errors.full_messages.each do |message| %>
+    $('.discussion_errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $("#comment_discussions_<%= @comment.id %>").append("<%= j render 'discussions/discussion', discussion: @discussion %>");
+  $('#comment_discussions_body_<%= @comment.id %>').val('');
+<% end %>

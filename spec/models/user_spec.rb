@@ -5,6 +5,7 @@ RSpec.describe User do
     it { should have_many(:recipes) }
     it { should have_many(:votes) }
     it { should have_many(:comments).dependent(:destroy) }
+    it { should have_many(:discussions).dependent(:destroy) }
     it { should have_many(:authorizations) }
     it { should have_many(:chats).dependent(:destroy) }
     it { should have_many(:messages).dependent(:destroy) }

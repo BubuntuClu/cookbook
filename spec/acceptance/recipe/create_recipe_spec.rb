@@ -20,22 +20,26 @@ feature 'Create recipe', %q{
     within page.all('.nested-fields')[0] do 
       fill_in 'Name', with: 'first ingredient'
       fill_in 'Measure', with: '1 glass'
+      fill_in 'Price', with: '13.3'
     end
 
     within page.all('.nested-fields')[1] do 
       fill_in 'Name', with: 'second ingredient'
       fill_in 'Measure', with: '3 spoons'
+      fill_in 'Price', with: '10'
     end
-    click_on 'Создать рецепт'
+    click_on 'Оформить рецепт'
 
-    expect(current_path).to eq recipe_path(Recipe.last.id)
+    expect(current_path).to eq recipe_path(Recipe.last.slug)
     expect(page).to have_content 'Test title'
     expect(page).to have_content 'Text description'
     expect(page).to have_content 'first ingredient'
     expect(page).to have_content '1 glass'
     expect(page).to have_content 'second ingredient'
     expect(page).to have_content '3 spoons'
-    # expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+    expect(page).to have_content '13.3'
+    expect(page).to have_content '10'
+    expect(page).to have_content '23.3'
   end
 
   scenario 'Authenticated user creates invalid recipe' do

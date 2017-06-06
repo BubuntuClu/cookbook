@@ -1,4 +1,5 @@
 class Recipe < ApplicationRecord
+  extend FriendlyId
   include Bootsy::Container
   include Votable
 
@@ -17,6 +18,8 @@ class Recipe < ApplicationRecord
 
   mount_uploader :preview_image, FileUploader
 
+  friendly_id :title, use: :slugged
+
   def set_to_draft(comment)
     self.comments.create(body: comment[:body], by_admin: true)
     self.update_attributes(status: :draft) 
@@ -29,5 +32,9 @@ class Recipe < ApplicationRecord
 
   def set_to_moderation(*args)
     self.update_attributes(status: :moderation) 
+  end
+
+  def normalize_friendly_id(text)
+    text.to_slug.transliterate(:russian).normalize.to_s
   end
 end
