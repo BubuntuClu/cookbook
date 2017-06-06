@@ -40,7 +40,6 @@ feature 'Create recipe', %q{
     expect(page).to have_content '13.3'
     expect(page).to have_content '10'
     expect(page).to have_content '23.3'
-    # expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 
   scenario 'Authenticated user creates invalid recipe' do

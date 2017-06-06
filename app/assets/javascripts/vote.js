@@ -15,6 +15,4 @@ $(document).ready(function(){
       $('#vote_' + result.id).parent().find('.unvote').addClass('hidden')
     }
   });
-  // .bind('ajax:error', function(e, xhr, status, error){
-  // });
 });
